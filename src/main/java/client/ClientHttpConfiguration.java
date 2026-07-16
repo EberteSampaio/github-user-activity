@@ -23,7 +23,7 @@ public class ClientHttpConfiguration {
                 .build();
         var response = client.send(httpRequest, BodyHandlers.ofString());
 
-        if (this.HTTP_NOT_FOUND <= response.statusCode()){
+        if (this.HTTP_NOT_FOUND == response.statusCode()){
             throw new UserNotFoundException();
         }
 

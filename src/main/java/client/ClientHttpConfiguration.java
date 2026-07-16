@@ -1,5 +1,8 @@
 package client;
 
+import exceptions.GitHubApiException;
+import exceptions.UserNotFoundException;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -21,7 +24,15 @@ public class ClientHttpConfiguration {
         var response = client.send(httpRequest, BodyHandlers.ofString());
 
         if (this.HTTP_NOT_FOUND <= response.statusCode()){
-            throw new Exception("Erro ao buscar dados." + response.body());
+            throw new UserNotFoundException();
+        }
+
+        if (response.statusCode() >= 400) {
+            throw new GitHubApiException(
+                    "Error communicating with the GitHub API.",
+                    response.statusCode(),
+                    response.body()
+            );
         }
 
         return response;

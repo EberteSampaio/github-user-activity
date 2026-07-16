@@ -1,7 +1,7 @@
 package domain;
 
-public class Repository {
-    private Long id;
-    private String name;
-    private  String url;
-}
+public record Repository(
+    long id,
+    String name,
+    String url
+){}

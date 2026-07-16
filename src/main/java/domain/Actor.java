@@ -1,7 +1,8 @@
 package domain;
 
-public class Actor {
-    public Long id;
-    public String name;
-    public String url;
+public record Actor(
+        long id,
+        String login,
+        String url
+){
 }

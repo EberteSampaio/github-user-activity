@@ -11,7 +11,7 @@ public enum EventType {
     FORK_EVENT("ForkEvent"),
     GOLLUM_EVENT("GollumEvent"),
     ISSUE_COMMENT_EVENT("IssueCommentEvent"),
-    ISSUE_EVENT("IssueEvent"),
+    ISSUES_EVENT("IssuesEvent"),
     MEMBER_EVENT("MemberEvent"),
     PUBLIC_EVENT("PublicEvent"),
     PULL_REQUEST_EVENT("PullRequestEvent"),
@@ -19,7 +19,8 @@ public enum EventType {
     PULL_REQUEST_REVIEW_COMMENT_EVENT("PullRequestReviewCommentEvent"),
     PUSH_EVENT("PushEvent"),
     RELEASE_EVENT("ReleaseEvent"),
-    WATCH_EVENT("WatchEvent");
+    WATCH_EVENT("WatchEvent"),
+    UNKNOWN_EVENT("UnknownEvent");
 
 
     private String name;
@@ -36,6 +37,6 @@ public enum EventType {
         return Arrays.stream(EventType.values())
                 .filter(v -> v.getName().equalsIgnoreCase(name))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Event type not found"));
+                .orElse(EventType.UNKNOWN_EVENT);
     }
 }

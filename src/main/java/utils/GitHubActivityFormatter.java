@@ -16,7 +16,7 @@ public class GitHubActivityFormatter {
 
         return switch (eventType){
             case PUSH_EVENT -> this.formatPushEvent(event);
-            case ISSUE_EVENT -> this.formatIssueEvent(event);
+            case ISSUES_EVENT -> this.formatIssuesEvent(event);
             case WATCH_EVENT -> this.formatWatchEvent(event);
             case FORK_EVENT -> this.formatForkEvent(event);
             case DELETE_EVET -> this.formatDeleteEvent(event);
@@ -31,18 +31,19 @@ public class GitHubActivityFormatter {
             case COMMIT_COMMENT_EVENT -> this.formatCommitCommentEvent(event);
             case PULL_REQUEST_REVIEW_EVENT -> this.formatPullRequestReviewEvent(event);
             case PULL_REQUEST_REVIEW_COMMENT_EVENT ->this.formatPullRequestReviewCommentEvent(event);
+            case UNKNOWN_EVENT ->"Unknown event was made";
             default -> throw new IllegalStateException("Unexpected value: " + eventType);
         };
     }
 
-    private String formatIssueEvent(Event event) {
+    private String formatIssuesEvent(Event event) {
         String action = event.payload().get("action").toString();
         return String.format("%s a issue in %s", this.uppercaseFirstChar(action), event.repo().name());
     }
 
     private String formatPushEvent(Event event) {
 
-        return String.format("Pushed 1 commit to %s", event.repo().name());
+        return String.format("Pushed to %s", event.repo().name());
     }
 
     private String formatCommitCommentEvent(Event event){

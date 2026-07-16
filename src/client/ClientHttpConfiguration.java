@@ -5,18 +5,23 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.time.Duration;
 
 public class ClientHttpConfiguration {
-    private final int HTTP_OK = 200;
+    private final int HTTP_NOT_FOUND = 400;
+    private final int LIMIT_TO_TIME_OUT = 200;
 
     public HttpResponse<String> get (String uri) throws Exception {
-        HttpClient client = HttpClient.newHttpClient();
+        HttpClient client = HttpClient.newBuilder()
+                .connectTimeout(Duration.ofSeconds(this.LIMIT_TO_TIME_OUT))
+                .build();
         HttpRequest httpRequest = HttpRequest.newBuilder(URI.create(uri))
+                .header("X-GitHub-Api-Version", "2026-03-10")
                 .build();
         var response = client.send(httpRequest, BodyHandlers.ofString());
 
-        if (this.HTTP_OK != response.statusCode()){
-            throw new Exception("Erro ao buscar dados. URI={"+uri+"}");
+        if (this.HTTP_NOT_FOUND == response.statusCode()){
+            throw new Exception("Erro ao buscar dados." + response.body());
         }
 
         return response;

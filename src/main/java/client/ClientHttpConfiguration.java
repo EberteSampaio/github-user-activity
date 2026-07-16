@@ -9,7 +9,7 @@ import java.time.Duration;
 
 public class ClientHttpConfiguration {
     private final int HTTP_NOT_FOUND = 404;
-    private final int LIMIT_TO_TIME_OUT = 200;
+    private final int LIMIT_TO_TIME_OUT = 20;
 
     public HttpResponse<String> get (String uri) throws Exception {
         HttpClient client = HttpClient.newBuilder()

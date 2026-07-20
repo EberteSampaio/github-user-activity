@@ -1,6 +1,7 @@
 package domain;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Map;
 
 public record Event(
@@ -10,6 +11,7 @@ public record Event(
      Repository repo,
      Map<String, Object> payload,
      boolean isPublic,
-     LocalDateTime createdAt
+     @JsonProperty("created_at")
+     String createdAt
 ){
 }
